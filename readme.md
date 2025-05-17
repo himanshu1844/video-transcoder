@@ -1,63 +1,69 @@
-Scalable Video Transcoding Pipeline using AWS and Docker
+🎥 Scalable Video Transcoding Pipeline using AWS and Docker
 
-This project describes the implementation of a scalable, event-driven video transcoding pipeline that processes uploaded video files, transcodes them into multiple resolutions, and stores optimized versions on Amazon S3. The system uses AWS cloud services and containerized architecture to automate and manage the entire workflow.
+This project implements a scalable, event-driven video transcoding pipeline that automatically processes uploaded videos, transcodes them into multiple resolutions, and stores optimized versions in Amazon S3. The system leverages AWS cloud services and containerization to provide a reliable and maintainable workflow.
 
-Technologies Used:
+🧰 Technologies Used
+📦 Amazon S3 – Storage for original and transcoded videos
 
-Amazon S3 – For storing original and transcoded video files
+📩 Amazon SQS – Message queue for event-driven processing
 
-Amazon SQS – For message queuing and triggering events
+🐳 Docker – Containerization of the transcoding service
 
-Amazon ECS – For running the containerized transcoding service
+🚢 Amazon ECS – Running containerized workloads at scale
 
-Amazon ECR – For storing Docker container images
+🏞️ Amazon ECR – Docker image repository
 
-Docker – For containerization of the processing service
+🎞️ FFmpeg – Video transcoding tool for multiple resolutions
 
-FFmpeg – For video transcoding into multiple resolutions
+🏗️ System Architecture
+Upload & Trigger
 
-System Architecture:
+User uploads video to a source S3 bucket
 
-Upload and Trigger:
-A user uploads a video to a designated source S3 bucket. This upload event generates a notification that is sent to an SQS queue.
+S3 sends an event notification to an SQS queue
 
-Message Processing:
-A Docker container running on Amazon ECS listens to the SQS queue. When a message is received, the container:
+Message Processing
 
-Downloads the video from the S3 source bucket
+Docker container running on ECS polls SQS messages
 
-Transcodes the video into multiple resolutions such as 360p, 480p, and 720p using FFmpeg
+On message receipt, downloads the video from S3
 
-Post-Processing:
-Once transcoding is complete, the new video files are uploaded to a target (production) S3 bucket. The SQS message is then deleted to confirm successful processing.
+Transcodes the video into multiple resolutions (360p, 480p, 720p) using FFmpeg
 
-Features:
+Post-Processing
 
-Event-driven automation using S3 event notifications and SQS
+Uploads transcoded videos to the target production S3 bucket
 
-Multi-resolution video generation using FFmpeg
+Deletes the SQS message after successful processing
 
-Containerized deployment with Docker for portability
+✔️ Features
+🔄 Event-driven automation using S3 & SQS
 
-Upload of optimized video files to a separate S3 production bucket
+📺 Multi-resolution video transcoding (360p, 480p, 720p)
 
-Error handling mechanisms to manage failures
+🐋 Containerized transcoding service using Docker
 
-IAM role and policy configurations for secure access control
+☁️ Scalable deployment on AWS ECS
 
-Debugging and Testing:
-Local testing and debugging of the Docker containers can be done using test video files and simulated SQS messages. Verbose logs and environment variables help in identifying issues during the transcoding or upload phases.
+🔒 Secure access with fine-grained IAM roles and policies
 
-Security Best Practices:
+⚙️ Robust error handling and retry mechanisms
 
-Use the principle of least privilege when assigning IAM roles
+🔍 Debugging & Testing
+Local container testing with sample videos and simulated SQS events
 
-Restrict access to S3 buckets and queues using bucket and resource policies
+Detailed logging to identify and fix issues
 
-Enable logging and monitoring for all AWS resources used
+Environment variables to configure and tune behavior
 
-Scalability Considerations:
+🔐 Security Best Practices
+Principle of least privilege for IAM permissions
 
-The ECS service can be horizontally scaled based on the number of messages in the SQS queue
+Bucket policies to restrict access to S3 data
 
-Stateless container design allows reliable performance in high-load scenarios.
+Logging and monitoring enabled for AWS resources
+
+📈 Scalability
+ECS service can scale out automatically based on SQS queue length
+
+Stateless container design supports load distribution and failover
