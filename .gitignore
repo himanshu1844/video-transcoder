@@ -1,5 +1,4 @@
 # Ignore environment variable files
 .env
 .env.*     
-secrets.txt
-secrets.txt.*
+
