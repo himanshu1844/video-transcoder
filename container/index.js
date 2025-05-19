@@ -25,7 +25,7 @@ const client = new S3Client({
   credentials: {
     accessKeyId: accessKeyId,
     secretAccessKey: secretAccessKey,
-    // NkkLRxg1y9Ap54tDzjjUG6ZSuVGftRkxwH4v2U3d
+   
   },
 });
 const Bucket=process.env.Bucket;
